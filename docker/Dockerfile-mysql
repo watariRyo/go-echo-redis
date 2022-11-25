@@ -1,0 +1,8 @@
+FROM --platform=linux/x86_64 mysql:8.0
+
+ENV MYSQL_ROOT_PASSWORD=root
+ENV TZ='Asia/Tokyo'
+
+COPY db/mysql/my.cnf /etc/mysql/conf.d/my.cnf
+
+EXPOSE 3306

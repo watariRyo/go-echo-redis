@@ -24,3 +24,5 @@
 go.work
 
 
+# docker
+docker/db/data

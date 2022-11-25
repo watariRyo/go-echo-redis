@@ -3,7 +3,7 @@ package conf
 const (
 	// MySQL
 	DB_HOST = "localhost"
-	DB_NAME = "diary"
+	DB_NAME = "balance"
 	DB_PORT = "3306"
 	DB_USER = "root"
 	DB_PASS = "root"
