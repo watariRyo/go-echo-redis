@@ -33,5 +33,5 @@ services:
       - balance
 
 networks:
-  diary:
+  balance:
     driver: bridge
