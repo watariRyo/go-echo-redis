@@ -25,23 +25,23 @@ func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	})
 
 	if loginRequest.Name != user.Name || loginRequest.Password != user.Password { // FormとDBのデータを比較
-        return &echo.HTTPError{
-            Code:    http.StatusUnauthorized,
-            Message: "Invalid Name or Password",
-        }
-    }
+		return &echo.HTTPError{
+			Code:    http.StatusUnauthorized,
+			Message: "Invalid Name or Password",
+		}
+	}
 
 	// セッション変数に値を付与
-	session:= helper.GetSession(c)
+	session := helper.GetSession(c)
 	session.Values["username"] = user.Name
 	session.Values["auth"] = true
-	if err:= sessions.Save(c.Request(), c.Response()); err != nil {
+	if err := sessions.Save(c.Request(), c.Response()); err != nil {
 		log.Fatal("Failed save session", err)
 	}
 
 	// JWT（Json Web Token）の処理
 	claims := &model.JWTCustomClaims{
-		UID: user.ID,
+		UID:  user.ID,
 		Name: user.Name,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 1).Unix(),
@@ -54,8 +54,8 @@ func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	}
 	session.Values["token"] = signedToken
 
-	responseJSON := response.LoginResponse {
-		Name: user.Name,
+	responseJSON := response.LoginResponse{
+		Name:  user.Name,
 		Token: signedToken,
 	}
 
@@ -63,7 +63,6 @@ func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 }
 
 var JWTConfig = middleware.JWTConfig{
-	Claims: &model.JWTCustomClaims{},
+	Claims:     &model.JWTCustomClaims{},
 	SigningKey: signingKey,
 }
-

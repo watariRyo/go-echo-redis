@@ -3,6 +3,7 @@ package main
 import (
 	"go-echo-redis/conf"
 	"go-echo-redis/handler"
+	"go-echo-redis/helper"
 	"go-echo-redis/model"
 	"go-echo-redis/model/response"
 	"net/http"
@@ -15,7 +16,7 @@ import (
 )
 
 func main() {
-	
+
 	// echoインスタンスを生成
 	e := echo.New()
 
@@ -50,9 +51,12 @@ func main() {
 func hello(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*model.JWTCustomClaims)
-    responseJSON := response.HelloResponse{
-        UID:  claims.UID,
-        Name: claims.Name,
-    }
-    return c.JSON(http.StatusOK, responseJSON)
+
+	s := helper.GetSession(c)
+
+	responseJSON := response.HelloResponse{
+		UID:  claims.UID,
+		Name: s.Values["username"].(string),
+	}
+	return c.JSON(http.StatusOK, responseJSON)
 }
