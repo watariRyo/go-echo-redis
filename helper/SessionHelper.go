@@ -13,12 +13,14 @@ import (
 
 const (
 	redisEndpoint = conf.REDIS_HOST + ":" + conf.REDIS_PORT
-	sessionKey = conf.SESSION_KEY
+	sessionKey    = conf.SESSION_KEY
 )
 
 func GetSession(c echo.Context) *sessions.Session {
 	client := redis.NewClient(&redis.Options{
-		Addr: redisEndpoint,
+		Addr:     redisEndpoint,
+		Password: "",
+		DB:       0,
 	})
 	store, err := redisstore.NewRedisStore(context.Background(), client)
 	if err != nil {
@@ -26,7 +28,7 @@ func GetSession(c echo.Context) *sessions.Session {
 	}
 	store.KeyPrefix("session_")
 	store.Options(sessions.Options{
-		MaxAge: 600,
+		MaxAge:   600,
 		HttpOnly: true,
 	})
 	session, err := store.Get(c.Request(), sessionKey)
