@@ -2,8 +2,9 @@ package helper
 
 import (
 	"context"
-	"go-echo-redis/conf"
 	"log"
+
+	"github.com/watariRyo/go-echo-redis/server/conf"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/gorilla/sessions"

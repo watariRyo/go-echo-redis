@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"go-echo-redis/application"
-	"go-echo-redis/model/request"
+	"github.com/watariRyo/go-echo-redis/server/application"
+	"github.com/watariRyo/go-echo-redis/server/model/request"
 
 	"github.com/labstack/echo/v4"
 )
@@ -16,7 +16,7 @@ func SignUpHandler(c echo.Context) error {
 	if err := c.Bind(signUpRequest); err != nil {
 		log.Printf("err %v", err.Error())
 		return &echo.HTTPError{
-			Code: http.StatusInternalServerError,
+			Code:    http.StatusInternalServerError,
 			Message: "Can not bind sign-up form",
 		}
 	}
@@ -25,7 +25,7 @@ func SignUpHandler(c echo.Context) error {
 	if signUpRequest.Name == "" || signUpRequest.Password == "" {
 		log.Printf("err %v", "Invalid Name or Password")
 		return &echo.HTTPError{
-			Code: http.StatusInternalServerError,
+			Code:    http.StatusInternalServerError,
 			Message: "Invalid Name or Password",
 		}
 	}

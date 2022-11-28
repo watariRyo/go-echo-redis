@@ -1,10 +1,11 @@
 package application
 
 import (
-	"go-echo-redis/db"
-	"go-echo-redis/model/request"
-	"go-echo-redis/model/response"
 	"net/http"
+
+	"github.com/watariRyo/go-echo-redis/server/db"
+	"github.com/watariRyo/go-echo-redis/server/model/request"
+	"github.com/watariRyo/go-echo-redis/server/model/response"
 
 	"github.com/labstack/echo/v4"
 )
@@ -16,7 +17,7 @@ func SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
 	// Name重複はエラー
 	if u.ID != 0 {
 		return &echo.HTTPError{
-			Code: http.StatusConflict,
+			Code:    http.StatusConflict,
 			Message: "Name already exists",
 		}
 	}
@@ -26,7 +27,7 @@ func SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
 	user.Password = signUpRequest.Password
 	db.CreateUser(user)
 
-	responseJSON := response.SignUpResponse {
+	responseJSON := response.SignUpResponse{
 		Message: "SignUp Success",
 	}
 

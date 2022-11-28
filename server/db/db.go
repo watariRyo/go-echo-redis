@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"go-echo-redis/conf"
+	"github.com/watariRyo/go-echo-redis/server/conf"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -17,7 +17,7 @@ const (
 
 func init() {
 	var err error
-	
+
 	dsn := dbEndpoint
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {

@@ -1,12 +1,13 @@
 package main
 
 import (
-	"go-echo-redis/conf"
-	"go-echo-redis/handler"
-	"go-echo-redis/helper"
-	"go-echo-redis/model"
-	"go-echo-redis/model/response"
 	"net/http"
+
+	"github.com/watariRyo/go-echo-redis/server/conf"
+	"github.com/watariRyo/go-echo-redis/server/handler"
+	"github.com/watariRyo/go-echo-redis/server/helper"
+	"github.com/watariRyo/go-echo-redis/server/model"
+	"github.com/watariRyo/go-echo-redis/server/model/response"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/sessions"

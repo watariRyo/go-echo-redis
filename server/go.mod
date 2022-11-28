@@ -1,4 +1,4 @@
-module go-echo-redis
+module github.com/watariRyo/go-echo-redis/server
 
 go 1.16
 

@@ -1,15 +1,16 @@
 package application
 
 import (
-	"go-echo-redis/conf"
-	"go-echo-redis/db"
-	"go-echo-redis/helper"
-	"go-echo-redis/model"
-	"go-echo-redis/model/request"
-	"go-echo-redis/model/response"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/watariRyo/go-echo-redis/server/conf"
+	"github.com/watariRyo/go-echo-redis/server/db"
+	"github.com/watariRyo/go-echo-redis/server/helper"
+	"github.com/watariRyo/go-echo-redis/server/model"
+	"github.com/watariRyo/go-echo-redis/server/model/request"
+	"github.com/watariRyo/go-echo-redis/server/model/response"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/sessions"
