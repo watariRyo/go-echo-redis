@@ -23,6 +23,8 @@
 # Go workspace file
 go.work
 
+# Svelete workspace file
+node_modules
 
 # docker
 docker/db/data
