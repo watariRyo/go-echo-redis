@@ -30,11 +30,11 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(conf.SIGNING_KEY))))
 
 	// ルート（認証不要）
-	e.POST("/signUp", handler.SignUpHandler)
-	e.POST("/login", handler.LoginHandler)
-	e.POST("/logout", handler.LogoutHandler)
+	e.POST("/echo/signUp", handler.SignUpHandler)
+	e.POST("/echo/login", handler.LoginHandler)
+	e.POST("/echo/logout", handler.LogoutHandler)
 
-	r := e.Group("/api")
+	r := e.Group("/echo//api")
 	// JWT検証
 	config := middleware.JWTConfig{
 		Claims:     &model.JWTCustomClaims{},
