@@ -10,6 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// TODO contextを渡さないようにする
 func SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
 	u := db.GetUser(&db.User{
 		Name: signUpRequest.Name,

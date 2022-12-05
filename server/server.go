@@ -1,15 +1,10 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/watariRyo/go-echo-redis/server/conf"
 	"github.com/watariRyo/go-echo-redis/server/handler"
-	"github.com/watariRyo/go-echo-redis/server/helper"
 	"github.com/watariRyo/go-echo-redis/server/model"
-	"github.com/watariRyo/go-echo-redis/server/model/response"
 
-	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
@@ -42,22 +37,8 @@ func main() {
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	// ルート（認証必要（/api/**））
-	r.GET("/", hello)
+	r.GET("/", handler.TestHandler)
 
 	// サーバ起動
 	e.Logger.Fatal(e.Start(":8080"))
-}
-
-// 認証サンプル
-func hello(c echo.Context) error {
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*model.JWTCustomClaims)
-
-	s := helper.GetSession(c)
-
-	responseJSON := response.HelloResponse{
-		UID:  claims.UID,
-		Name: s.Values["username"].(string),
-	}
-	return c.JSON(http.StatusOK, responseJSON)
 }

@@ -25,6 +25,7 @@ go.work
 
 # Svelete workspace file
 node_modules
+frontend/public/build
 
 # docker
 docker/db/data

@@ -20,6 +20,7 @@ import (
 
 var signingKey = []byte(conf.SIGNING_KEY)
 
+// TODO contextを渡さないようにする
 func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	user := db.GetUser(&db.User{
 		Name: loginRequest.Name,
