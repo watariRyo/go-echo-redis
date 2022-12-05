@@ -12,10 +12,17 @@ import (
 	"github.com/rbcervilla/redisstore/v8"
 )
 
-const (
-	redisEndpoint = conf.REDIS_HOST + ":" + conf.REDIS_PORT
-	sessionKey    = conf.SESSION_KEY
-)
+var redisEndpoint = ""
+var sessionKey = ""
+
+func init() {
+	cfg, err := conf.Load()
+	if err != nil {
+		panic(err)
+	}
+	redisEndpoint = cfg.Redis.Host + ":" + cfg.Redis.Port
+	sessionKey = cfg.Redis.Key
+}
 
 func GetSession(c echo.Context) *sessions.Session {
 	client := redis.NewClient(&redis.Options{

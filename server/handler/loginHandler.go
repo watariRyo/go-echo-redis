@@ -21,5 +21,6 @@ func LoginHandler(c echo.Context) error {
 		}
 	}
 
-	return application.Login(c, loginRequest)
+	var login = application.LoginFactory()
+	return login.Login(c, loginRequest)
 }

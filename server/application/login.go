@@ -15,13 +15,29 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
-var signingKey = []byte(conf.SIGNING_KEY)
+var cfg = &conf.Config{}
+
+type LoginApplication struct {
+	conf *conf.Config
+}
+
+func init() {
+	var err error
+
+	cfg, err = conf.Load()
+	if err != nil {
+		panic(err)
+	}
+}
+
+func LoginFactory() LoginApplication {
+	return LoginApplication{conf: cfg}
+}
 
 // TODO contextを渡さないようにする
-func Login(c echo.Context, loginRequest *request.LoginRequest) error {
+func (loginApplication LoginApplication) Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	user := db.GetUser(&db.User{
 		Name: loginRequest.Name,
 	})
@@ -50,8 +66,9 @@ func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString(signingKey)
+	signedToken, err := token.SignedString([]byte(loginApplication.conf.Jwt.Key))
 	if err != nil {
+		println("hoge")
 		return err
 	}
 	session.Values["token"] = signedToken
@@ -64,7 +81,7 @@ func Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	return c.JSON(http.StatusOK, responseJSON)
 }
 
-var JWTConfig = middleware.JWTConfig{
-	Claims:     &model.JWTCustomClaims{},
-	SigningKey: signingKey,
-}
+// var JWTConfig = middleware.JWTConfig{
+// 	Claims:     &model.JWTCustomClaims{},
+// 	SigningKey: log,
+// }

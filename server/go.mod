@@ -11,6 +11,7 @@ require (
 	github.com/labstack/echo-contrib v0.13.0 // indirect
 	github.com/labstack/echo/v4 v4.9.0 // indirect
 	github.com/rbcervilla/redisstore/v8 v8.1.0 // indirect
+	github.com/spf13/viper v1.14.0 // indirect
 	go.opentelemetry.io/otel v0.16.0 // indirect
 	gorm.io/driver/mysql v1.4.1 // indirect
 	gorm.io/gorm v1.24.0 // indirect

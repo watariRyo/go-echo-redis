@@ -11,14 +11,16 @@ import (
 
 var db *gorm.DB
 
-const (
-	dbEndpoint = conf.DB_USER + ":" + conf.DB_PASS + "@tcp(" + conf.DB_HOST + ":" + conf.DB_PORT + ")/" + conf.DB_NAME + "?charset=utf8mb4&parseTime=True&loc=Local"
-)
-
 func init() {
 	var err error
 
-	dsn := dbEndpoint
+	cfg, err := conf.Load()
+	if err != nil {
+		panic(err)
+	}
+
+	dsn := cfg.Db.User + ":" + cfg.Db.Password + "@tcp(" + cfg.Db.Host + ":" + cfg.Db.Port + ")/" + cfg.Db.Name + "?charset=utf8mb4&parseTime=True&loc=Local"
+
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Println(err)

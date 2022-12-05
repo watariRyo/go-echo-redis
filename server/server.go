@@ -16,13 +16,18 @@ func main() {
 	// echoインスタンスを生成
 	e := echo.New()
 
+	cfg, err := conf.Load()
+	if err != nil {
+		panic(err)
+	}
+
 	// middleware設定
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.Gzip())
 
 	// セッション
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte(conf.SIGNING_KEY))))
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte(cfg.Jwt.Key))))
 
 	// ルート（認証不要）
 	e.POST("/echo/signUp", handler.SignUpHandler)
@@ -33,7 +38,7 @@ func main() {
 	// JWT検証
 	config := middleware.JWTConfig{
 		Claims:     &model.JWTCustomClaims{},
-		SigningKey: []byte(conf.SIGNING_KEY),
+		SigningKey: []byte(cfg.Jwt.Key),
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	// ルート（認証必要（/api/**））

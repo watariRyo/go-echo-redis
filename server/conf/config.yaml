@@ -1,0 +1,13 @@
+db:
+  host: "localhost"
+  name: "balance"
+  port: 3306
+  user: "root"
+  password: "root"
+redis:
+  host: "localhost"
+  port: 6379
+  password: ""
+  key: "my-investment"
+jwt:
+  key: "secret"
