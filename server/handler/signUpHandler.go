@@ -10,7 +10,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SignUpHandler(c echo.Context) error {
+type SignUpHandler struct {
+	signUpDomain domain.SignUpDomain
+}
+
+func NewSignUpHandler() SignUpHandler {
+	return SignUpHandler{
+		signUpDomain: domain.NewSignUpDomain(),
+	}
+}
+
+func (signUpHandler SignUpHandler) SignUp(c echo.Context) error {
 	signUpRequest := new(request.SignUpRequest)
 
 	if err := c.Bind(signUpRequest); err != nil {
@@ -30,5 +40,5 @@ func SignUpHandler(c echo.Context) error {
 		}
 	}
 
-	return domain.SignUp(c, signUpRequest)
+	return signUpHandler.signUpDomain.SignUp(c, signUpRequest)
 }

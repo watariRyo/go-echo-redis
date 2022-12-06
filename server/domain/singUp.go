@@ -11,9 +11,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
-	userRepository := repository.NewUserRepository()
-	u := userRepository.GetUser(&model.User{
+type SignUpDomain struct {
+	userRepository repository.UserRepository
+}
+
+func NewSignUpDomain() SignUpDomain {
+	return SignUpDomain{
+		userRepository: repository.NewUserRepository(),
+	}
+}
+
+func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
+	u := signUpDomain.userRepository.GetUser(&model.User{
 		Name: signUpRequest.Name,
 	})
 	// Name重複はエラー
@@ -27,7 +36,7 @@ func SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
 	user := new(model.User)
 	user.Name = signUpRequest.Name
 	user.Password = signUpRequest.Password
-	userRepository.CreateUser(user)
+	signUpDomain.userRepository.CreateUser(user)
 
 	responseJSON := response.SignUpResponse{
 		Message: "SignUp Success",

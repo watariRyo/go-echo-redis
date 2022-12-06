@@ -30,8 +30,8 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(cfg.Jwt.Key))))
 
 	// ルート（認証不要）
-	e.POST("/echo/signUp", handler.SignUpHandler)
-	e.POST("/echo/login", handler.LoginHandler)
+	e.POST("/echo/signUp", handler.NewSignUpHandler().SignUp)
+	e.POST("/echo/login", handler.NewLoginHandler().Login)
 	e.POST("/echo/logout", handler.LogoutHandler)
 
 	r := e.Group("/echo/api")
@@ -42,7 +42,7 @@ func main() {
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	// ルート（認証必要（/api/**））
-	r.GET("/", handler.TestHandler)
+	r.GET("/", handler.NewTestHandler().Test)
 
 	// サーバ起動
 	e.Logger.Fatal(e.Start(":8080"))

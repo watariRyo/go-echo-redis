@@ -6,6 +6,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func TestHandler(c echo.Context) error {
-	return domain.Test(c)
+type TestHandler struct {
+	testDomain domain.TestDomain
+}
+
+func NewTestHandler() TestHandler {
+	return TestHandler{
+		testDomain: domain.NewTestDomain(),
+	}
+}
+
+func (testHandler TestHandler) Test(c echo.Context) error {
+	return testHandler.testDomain.Test(c)
 }

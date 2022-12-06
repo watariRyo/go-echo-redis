@@ -11,7 +11,13 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func Test(c echo.Context) error {
+type TestDomain struct{}
+
+func NewTestDomain() TestDomain {
+	return TestDomain{}
+}
+
+func (testDomain TestDomain) Test(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*model.JWTCustomClaims)
 

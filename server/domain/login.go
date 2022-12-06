@@ -4,7 +4,6 @@ import (
 	"github.com/watariRyo/go-echo-redis/server/repository"
 	"net/http"
 
-	"github.com/watariRyo/go-echo-redis/server/conf"
 	"github.com/watariRyo/go-echo-redis/server/helper"
 	"github.com/watariRyo/go-echo-redis/server/model"
 	"github.com/watariRyo/go-echo-redis/server/model/request"
@@ -13,18 +12,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-var cfg = &conf.Config{}
-
-type LoginApplication struct {
+type LoginDomain struct {
+	userRepository repository.UserRepository
 }
 
-func LoginFactory() LoginApplication {
-	return LoginApplication{}
+func NewLoginDomain() LoginDomain {
+	return LoginDomain{
+		userRepository: repository.NewUserRepository(),
+	}
 }
 
-func (loginApplication LoginApplication) Login(c echo.Context, loginRequest *request.LoginRequest) error {
-	userRepository := repository.NewUserRepository()
-	user := userRepository.GetUser(&model.User{
+func (loginDomain LoginDomain) Login(c echo.Context, loginRequest *request.LoginRequest) error {
+	user := loginDomain.userRepository.GetUser(&model.User{
 		Name: loginRequest.Name,
 	})
 

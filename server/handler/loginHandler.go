@@ -10,7 +10,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func LoginHandler(c echo.Context) error {
+type LoginHandler struct {
+	loginDomain domain.LoginDomain
+}
+
+func NewLoginHandler() LoginHandler {
+	return LoginHandler{
+		loginDomain: domain.NewLoginDomain(),
+	}
+}
+
+func (loginHandler LoginHandler) Login(c echo.Context) error {
 	loginRequest := new(request.LoginRequest)
 
 	if err := c.Bind(loginRequest); err != nil {
@@ -21,6 +31,5 @@ func LoginHandler(c echo.Context) error {
 		}
 	}
 
-	var login = domain.LoginFactory()
-	return login.Login(c, loginRequest)
+	return loginHandler.loginDomain.Login(c, loginRequest)
 }
