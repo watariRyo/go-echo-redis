@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/watariRyo/go-echo-redis/server/application"
+	"github.com/watariRyo/go-echo-redis/server/domain"
 	"github.com/watariRyo/go-echo-redis/server/model/request"
 
 	"github.com/labstack/echo/v4"
@@ -21,6 +21,6 @@ func LoginHandler(c echo.Context) error {
 		}
 	}
 
-	var login = application.LoginFactory()
+	var login = domain.LoginFactory()
 	return login.Login(c, loginRequest)
 }

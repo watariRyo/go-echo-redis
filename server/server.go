@@ -34,7 +34,7 @@ func main() {
 	e.POST("/echo/login", handler.LoginHandler)
 	e.POST("/echo/logout", handler.LogoutHandler)
 
-	r := e.Group("/echo//api")
+	r := e.Group("/echo/api")
 	// JWT検証
 	config := middleware.JWTConfig{
 		Claims:     &model.JWTCustomClaims{},

@@ -1,4 +1,4 @@
-package application
+package domain
 
 import (
 	"net/http"
@@ -11,7 +11,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// TODO contextを渡さないようにする
 func Test(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*model.JWTCustomClaims)

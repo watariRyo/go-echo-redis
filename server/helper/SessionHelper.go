@@ -45,3 +45,14 @@ func GetSession(c echo.Context) *sessions.Session {
 	}
 	return session
 }
+
+func SessionGrantValueToAuth(c echo.Context, username string, signedToken string) {
+	// セッション変数に値を付与
+	session := GetSession(c)
+	session.Values["username"] = username
+	session.Values["auth"] = true
+	session.Values["token"] = signedToken
+	if err := sessions.Save(c.Request(), c.Response()); err != nil {
+		log.Fatal("Failed save session", err)
+	}
+}

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/watariRyo/go-echo-redis/server/conf"
+	"github.com/watariRyo/go-echo-redis/server/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,5 +28,9 @@ func init() {
 	}
 
 	// Migration
-	db.AutoMigrate(&User{})
+	db.AutoMigrate(&model.User{})
+}
+
+func LoadClient() *gorm.DB {
+	return db
 }

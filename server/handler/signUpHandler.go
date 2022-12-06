@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/watariRyo/go-echo-redis/server/application"
+	"github.com/watariRyo/go-echo-redis/server/domain"
 	"github.com/watariRyo/go-echo-redis/server/model/request"
 
 	"github.com/labstack/echo/v4"
@@ -30,5 +30,5 @@ func SignUpHandler(c echo.Context) error {
 		}
 	}
 
-	return application.SignUp(c, signUpRequest)
+	return domain.SignUp(c, signUpRequest)
 }
