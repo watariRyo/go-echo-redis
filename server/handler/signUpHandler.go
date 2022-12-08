@@ -14,10 +14,8 @@ type SignUpHandler struct {
 	signUpDomain domain.SignUpDomain
 }
 
-func NewSignUpHandler() SignUpHandler {
-	return SignUpHandler{
-		signUpDomain: domain.NewSignUpDomain(),
-	}
+func NewSignUpHandler(signUpDomain domain.SignUpDomain) SignUpHandler {
+	return SignUpHandler{signUpDomain}
 }
 
 func (signUpHandler SignUpHandler) SignUp(c echo.Context) error {

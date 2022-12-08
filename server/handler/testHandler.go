@@ -10,10 +10,8 @@ type TestHandler struct {
 	testDomain domain.TestDomain
 }
 
-func NewTestHandler() TestHandler {
-	return TestHandler{
-		testDomain: domain.NewTestDomain(),
-	}
+func NewTestHandler(testDomain domain.TestDomain) TestHandler {
+	return TestHandler{testDomain}
 }
 
 func (testHandler TestHandler) Test(c echo.Context) error {

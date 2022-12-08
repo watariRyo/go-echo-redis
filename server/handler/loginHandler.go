@@ -14,10 +14,8 @@ type LoginHandler struct {
 	loginDomain domain.LoginDomain
 }
 
-func NewLoginHandler() LoginHandler {
-	return LoginHandler{
-		loginDomain: domain.NewLoginDomain(),
-	}
+func NewLoginHandler(loginDomain domain.LoginDomain) LoginHandler {
+	return LoginHandler{loginDomain}
 }
 
 func (loginHandler LoginHandler) Login(c echo.Context) error {

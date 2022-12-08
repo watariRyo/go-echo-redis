@@ -15,10 +15,8 @@ type SignUpDomain struct {
 	userRepository repository.UserRepository
 }
 
-func NewSignUpDomain() SignUpDomain {
-	return SignUpDomain{
-		userRepository: repository.NewUserRepository(),
-	}
+func NewSignUpDomain(userRepository repository.UserRepository) SignUpDomain {
+	return SignUpDomain{userRepository}
 }
 
 func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {

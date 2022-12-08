@@ -16,10 +16,8 @@ type LoginDomain struct {
 	userRepository repository.UserRepository
 }
 
-func NewLoginDomain() LoginDomain {
-	return LoginDomain{
-		userRepository: repository.NewUserRepository(),
-	}
+func NewLoginDomain(userRepository repository.UserRepository) LoginDomain {
+	return LoginDomain{userRepository}
 }
 
 func (loginDomain LoginDomain) Login(c echo.Context, loginRequest *request.LoginRequest) error {

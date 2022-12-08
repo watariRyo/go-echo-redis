@@ -1,17 +1,27 @@
 package main
 
 import (
-	"github.com/watariRyo/go-echo-redis/server/conf"
-	"github.com/watariRyo/go-echo-redis/server/handler"
-	"github.com/watariRyo/go-echo-redis/server/model"
-
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/watariRyo/go-echo-redis/server/conf"
+	"github.com/watariRyo/go-echo-redis/server/domain"
+	"github.com/watariRyo/go-echo-redis/server/handler"
+	"github.com/watariRyo/go-echo-redis/server/model"
+	"github.com/watariRyo/go-echo-redis/server/repository"
 )
 
 func main() {
+	// TODO
+	// server.goをmainに変換
+	// server設定部分を分離
+	// wire導入
+
+	// Injection
+	login := handler.NewLoginHandler(domain.NewLoginDomain(repository.NewUserRepository()))
+	signUp := handler.NewSignUpHandler(domain.NewSignUpDomain(repository.NewUserRepository()))
+	test := handler.NewTestHandler(domain.NewTestDomain())
 
 	// echoインスタンスを生成
 	e := echo.New()
@@ -30,8 +40,8 @@ func main() {
 	e.Use(session.Middleware(sessions.NewCookieStore([]byte(cfg.Jwt.Key))))
 
 	// ルート（認証不要）
-	e.POST("/echo/signUp", handler.NewSignUpHandler().SignUp)
-	e.POST("/echo/login", handler.NewLoginHandler().Login)
+	e.POST("/echo/signUp", signUp.SignUp)
+	e.POST("/echo/login", login.Login)
 	e.POST("/echo/logout", handler.LogoutHandler)
 
 	r := e.Group("/echo/api")
@@ -42,7 +52,7 @@ func main() {
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	// ルート（認証必要（/api/**））
-	r.GET("/", handler.NewTestHandler().Test)
+	r.GET("/", test.Test)
 
 	// サーバ起動
 	e.Logger.Fatal(e.Start(":8080"))
