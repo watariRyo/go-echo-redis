@@ -8,9 +8,10 @@ import (
 )
 
 type Config struct {
-	Db    Db    `yaml:"db"`
-	Redis Redis `yaml:"redis"`
-	Jwt   Jwt   `yaml:"jwt"`
+	Db        Db        `yaml:"db"`
+	ApiServer ApiServer `yaml:"apiServer"`
+	Redis     Redis     `yaml:"redis"`
+	Jwt       Jwt       `yaml:"jwt"`
 }
 
 type Db struct {
@@ -19,6 +20,11 @@ type Db struct {
 	Port     string `yaml:"port"`
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
+}
+
+type ApiServer struct {
+	Port        string `yaml:"port"`
+	CorsOrigins string `yaml:"corsOrigins"`
 }
 
 type Redis struct {

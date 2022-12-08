@@ -4,6 +4,9 @@ db:
   port: 3306
   user: "root"
   password: "root"
+apiServer:
+  port: 8080
+  corsOrigins: "http://localhost:3000,http://localhost:8080"
 redis:
   host: "localhost"
   port: 6379
