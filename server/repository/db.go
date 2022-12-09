@@ -22,7 +22,9 @@ func init() {
 
 	dsn := cfg.Db.User + ":" + cfg.Db.Password + "@tcp(" + cfg.Db.Host + ":" + cfg.Db.Port + ")/" + cfg.Db.Name + "?charset=utf8mb4&parseTime=True&loc=Local"
 
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		log.Println(err)
 	}

@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"github.com/watariRyo/go-echo-redis/server/helper"
 	"github.com/watariRyo/go-echo-redis/server/repository"
 	"net/http"
 
@@ -20,25 +21,30 @@ func NewSignUpDomain(userRepository repository.UserRepository) SignUpDomain {
 }
 
 func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
-	u := signUpDomain.userRepository.GetUser(&model.User{
-		Name: signUpRequest.Name,
-	})
-	// Name重複はエラー
-	if u.ID != 0 {
-		return &echo.HTTPError{
-			Code:    http.StatusConflict,
-			Message: "Name already exists",
+
+	signUpFunc := func() error {
+		u := signUpDomain.userRepository.GetUser(&model.User{
+			Name: signUpRequest.Name,
+		})
+		// Name重複はエラー
+		if u.ID != 0 {
+			return &echo.HTTPError{
+				Code:    http.StatusConflict,
+				Message: "Name already exists",
+			}
 		}
+
+		user := new(model.User)
+		user.Name = signUpRequest.Name
+		user.Password = signUpRequest.Password
+		signUpDomain.userRepository.CreateUser(user)
+
+		responseJSON := response.SignUpResponse{
+			Message: "SignUp Success",
+		}
+
+		return c.JSON(http.StatusOK, responseJSON)
 	}
 
-	user := new(model.User)
-	user.Name = signUpRequest.Name
-	user.Password = signUpRequest.Password
-	signUpDomain.userRepository.CreateUser(user)
-
-	responseJSON := response.SignUpResponse{
-		Message: "SignUp Success",
-	}
-
-	return c.JSON(http.StatusOK, responseJSON)
+	return helper.Transaction(signUpFunc)
 }
