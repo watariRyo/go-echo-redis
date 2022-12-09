@@ -22,10 +22,12 @@ func NewSignUpDomain(userRepository repository.UserRepository) SignUpDomain {
 
 func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.SignUpRequest) error {
 
+	tx := repository.BeginTransaction()
+
 	signUpFunc := func() error {
 		u := signUpDomain.userRepository.GetUser(&model.User{
 			Name: signUpRequest.Name,
-		})
+		}, nil)
 		// Name重複はエラー
 		if u.ID != 0 {
 			return &echo.HTTPError{
@@ -37,7 +39,7 @@ func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.S
 		user := new(model.User)
 		user.Name = signUpRequest.Name
 		user.Password = signUpRequest.Password
-		signUpDomain.userRepository.CreateUser(user)
+		signUpDomain.userRepository.CreateUser(user, tx)
 
 		responseJSON := response.SignUpResponse{
 			Message: "SignUp Success",
@@ -46,5 +48,5 @@ func (signUpDomain SignUpDomain) SignUp(c echo.Context, signUpRequest *request.S
 		return c.JSON(http.StatusOK, responseJSON)
 	}
 
-	return helper.Transaction(signUpFunc)
+	return helper.Transaction(tx, signUpFunc)
 }

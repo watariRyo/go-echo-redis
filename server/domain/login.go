@@ -23,7 +23,7 @@ func NewLoginDomain(userRepository repository.UserRepository) LoginDomain {
 func (loginDomain LoginDomain) Login(c echo.Context, loginRequest *request.LoginRequest) error {
 	user := loginDomain.userRepository.GetUser(&model.User{
 		Name: loginRequest.Name,
-	})
+	}, nil)
 
 	if loginRequest.Name != user.Name || loginRequest.Password != user.Password { // FormとDBのデータを比較
 		return &echo.HTTPError{

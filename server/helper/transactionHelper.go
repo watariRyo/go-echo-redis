@@ -1,19 +1,10 @@
 package helper
 
 import (
-	"github.com/watariRyo/go-echo-redis/server/repository"
 	"gorm.io/gorm"
 )
 
-var db *gorm.DB
-
-func init() {
-	db = repository.LoadClient()
-}
-
-func Transaction(f func() error) error {
-	// repository側でdbを使ってしまっているのでトランザクションがかからない
-	tx := db.Begin()
+func Transaction(tx *gorm.DB, f func() error) error {
 	defer func() {
 		if r := recover(); r != nil {
 			tx.Rollback()
