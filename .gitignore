@@ -40,3 +40,6 @@ frontend/public/build
 
 # docker
 docker/db/data
+
+# build
+build
