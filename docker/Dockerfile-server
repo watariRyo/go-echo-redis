@@ -1,0 +1,12 @@
+FROM golang:1.19
+
+WORKDIR /usr/src/app
+
+# 配置の都合、「../server」でbuildは実行する
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
+
+COPY . .
+RUN make build-production-linux
+
+CMD ["./build/prod"]

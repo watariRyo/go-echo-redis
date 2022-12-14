@@ -26,6 +26,7 @@ func main() {
 	}
 	s := server.InitializeService(&cfg.ApiServer, repository.LoadClient())
 
+	println(cfg.Db.Host)
 	println(cfg.ApiServer.CorsOrigins)
 
 	// サーバ起動
