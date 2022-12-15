@@ -1,5 +1,5 @@
 export const apiClient = async(endPoint, config) => {
-    const response = await fetch(`${endPoint}`, {
+    const response = await fetch(BACKEND_URL + `${endPoint}`, {
         mode: 'cors',
         ...config,
         headers: {

@@ -5,6 +5,10 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import localdev from 'rollup-plugin-dev';
 import css from 'rollup-plugin-css-only';
+import dotenv from 'dotenv';
+import replace from "@rollup/plugin-replace";
+
+dotenv.config()
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -38,6 +42,9 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+			BACKEND_URL: JSON.stringify(process.env.BACKEND_URL)
+		}),
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -61,16 +68,16 @@ export default {
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
-		// !production && serve(),
-		!production && localdev({
-			dirs: ['public'],
-			host: 'localhost',
-			port: '3000',
-			spa: true,
-			proxy: [{
-				from:'/echo/*', to:'http://localhost:8080'
-			}]
-		}),
+		!production && serve(),
+		// !production && localdev({
+		// 	dirs: ['public'],
+		// 	host: 'localhost',
+		// 	port: '3000',
+		// 	spa: true,
+		// 	proxy: [{
+		// 		from:'/echo/*', to:'http://localhost:8080'
+		// 	}]
+		// }),
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
@@ -78,7 +85,7 @@ export default {
 
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
-		production && terser()
+		production && terser(),
 	],
 	watch: {
 		clearScreen: false
