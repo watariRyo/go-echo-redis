@@ -43,6 +43,7 @@ export default {
 	},
 	plugins: [
 		replace({
+			preventAssignment: true,
 			BACKEND_URL: JSON.stringify(process.env.BACKEND_URL)
 		}),
 		svelte({

@@ -7,18 +7,6 @@ import (
 )
 
 func main() {
-	// TODO
-	// server.goをmainに変換
-	// server設定部分を分離
-	// wire導入
-
-	// Injection
-	//login := handler.NewLoginHandler(domain.NewLoginDomain(repository.NewUserRepository()))
-	//signUp := handler.NewSignUpHandler(domain.NewSignUpDomain(repository.NewUserRepository()))
-	//test := handler.NewTestHandler(domain.NewTestDomain())
-
-	// echoインスタンスを生成
-	//e := echo.New()
 
 	cfg, err := conf.Load()
 	if err != nil {

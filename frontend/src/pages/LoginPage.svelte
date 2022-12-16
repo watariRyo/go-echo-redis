@@ -2,13 +2,16 @@
     import Button from "../component/Button.svelte";
     import Input from "../component/Input.svelte";
     import { login } from "../api/apiCalls"
-  import { ApiError } from "../api/apiClient";
+    import { ApiError } from "../api/apiClient";
+    import { auth } from "../store/store"
 
     let name, password;
-    let apiProgress = true;
+    let apiProgress = false;
     let disabled = false;
     let failMessage;
     let errors = {}
+
+    $: disabled = (name && password) ? false : true
 
     const onChange = (event) => {
         const { id, value } = event.target;
@@ -18,21 +21,24 @@
             password = value
         }
         failMessage = undefined
-        disabled = (name && password) ? false : true
     }
 
     const onClick = async() => {
         apiProgress = true
         try {
             const response = await login({name, password});
-            console.log(response.token)
+            $auth = {
+                header: `Bearer ${response.token}`,
+                isLoggedIn: true
+            }
+
         } catch (e) {
             if (e instanceof ApiError) {
                 const error = e.serialize()
                 errors = error.serverErrorContent
                 console.log(errors)
             } else {
-                throw error
+                throw e
             }
         }
         apiProgress =false;

@@ -1,9 +1,9 @@
 <script>
-    export let disabled, onClick, classes = ""
+    export let disabled, apiProgress, onClick, classes = ""
 </script>
 
 <button class={classes}
-    disabled={disabled} 
+    disabled={disabled | apiProgress}
     on:click|preventDefault={onClick}>
     <slot></slot>
 </button>

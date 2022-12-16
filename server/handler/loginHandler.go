@@ -20,7 +20,6 @@ func NewLoginHandler(loginDomain domain.LoginDomain) LoginHandler {
 
 func (loginHandler LoginHandler) Login(c echo.Context) error {
 	loginRequest := new(request.LoginRequest)
-	println(c.Request().Body)
 
 	if err := c.Bind(loginRequest); err != nil {
 		log.Printf("err %v", err.Error())
