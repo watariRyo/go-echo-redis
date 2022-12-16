@@ -49,7 +49,8 @@ export default {
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
-				dev: !production
+				dev: !production,
+				css: false,
 			}
 		}),
 		// we'll extract any component CSS out into
@@ -69,16 +70,16 @@ export default {
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
-		!production && serve(),
-		// !production && localdev({
-		// 	dirs: ['public'],
-		// 	host: 'localhost',
-		// 	port: '3000',
-		// 	spa: true,
-		// 	proxy: [{
-		// 		from:'/echo/*', to:'http://localhost:8080'
-		// 	}]
-		// }),
+		// !production && serve(),
+		!production && localdev({
+			dirs: ['public'],
+			host: 'localhost',
+			port: '3000',
+			spa: true,
+			// proxy: [{
+			// 	from:'/echo/*', to:'http://localhost:8080'
+			// }]
+		}),
 
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production

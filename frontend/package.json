@@ -38,6 +38,7 @@
     "postcss-cli": "^7",
     "secure-ls": "^1.2.6",
     "sirv-cli": "^2.0.0",
+    "svelte-routing": "^1.6.0",
     "tailwindcss": "yarn:@tailwindcss/postcss7-compat"
   },
   "jest": {
