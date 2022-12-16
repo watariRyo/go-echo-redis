@@ -8,6 +8,11 @@
 </script>
 
 <Router url={window.location.pathname}>
+	<!-- 開発環境以外（yarn start）だとURL直打ちは失敗する
+	rollupがルートパスのindex.htmlのみを提供しているため
+	devはfallbackにルートを指定してどのURLでもアプリがロードされるように構成している
+	dev以外も同じような設定を入れないといけないが不明
+	-->
 	<Route path="/">
 		{#if $auth.isLoggedIn}
 			<HomePage />
