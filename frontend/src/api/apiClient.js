@@ -1,6 +1,7 @@
 export const apiClient = async(endPoint, config) => {
     const response = await fetch(BACKEND_URL + `${endPoint}`, {
         mode: 'cors',
+        credentials: 'include', // サイトを跨ぐCookieの保持に必須
         ...config,
         headers: {
             ...config.headers

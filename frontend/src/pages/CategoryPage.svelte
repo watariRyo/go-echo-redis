@@ -7,17 +7,19 @@
     import { navigate } from "svelte-routing";
 
     let apiProgress = false
+    let id = "click button"
 
     const onClick = async() => {
         apiProgress = true
         const response = await getUser($auth.header);
-        console.log(response.name)
+        id = response.uid
     }
 
 </script>
 
 <NavBar />
 <h1>Category</h1>
+<h2>Your Id: {id}</h2>
 <Button disabled=false {apiProgress} 
 classes="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" 
 {onClick}>
