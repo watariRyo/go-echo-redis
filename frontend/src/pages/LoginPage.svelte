@@ -1,7 +1,7 @@
 <script>
     import Button from "../component/Button.svelte";
     import Input from "../component/Input.svelte";
-    import { login } from "../api/apiCalls"
+    import { login } from "../api/login"
     import { ApiError } from "../api/apiClient";
     import { auth } from "../store/store"
 
@@ -79,7 +79,6 @@
             </div>
         
             <div>
-                <button type="submit" class="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 <Button {disabled} {apiProgress} 
                     classes="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" 
                     {onClick}>
