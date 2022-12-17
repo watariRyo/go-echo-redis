@@ -1,0 +1,12 @@
+FROM node:16
+
+WORKDIR /app
+
+COPY . .
+
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash && \
+    yarn
+
+RUN yarn build && export
+
+CMD ["yarn", "start"]

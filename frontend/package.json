@@ -8,7 +8,7 @@
     "build": "rollup -c",
     "dev2": "rollup -c -w --port 3000",
     "dev": "concurrently \"rollup -c -w\" \"yarn watch:tailwind\"",
-    "start": "sirv public --no-clear --port 3000",
+    "start": "sirv public --no-clear --host 0.0.0.0 --port 3000",
     "test": "jest --watch"
   },
   "devDependencies": {

@@ -31,6 +31,41 @@ services:
       - "6379:6379"
     networks:
       - balance
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile-server
+    image: go-server:1.0
+    container_name: go-server
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - balance
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile-front
+    image: frontend:1.0
+    container_name: svelte-front
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    networks:
+      - balance
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '3443:443'
+    environment:
+      STAGE: local
+      DOMAINS: 'localhost -> http://host.docker.internal:3000'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - balance
 
 networks:
   balance:
